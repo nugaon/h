@@ -7,10 +7,8 @@ const id = 'SampleDapp:v1'
 const targetBeeOverlayAddress = 'b0baf37700000000000000000000000000000000000000000000000000000000'
 
 interface SampleDappRecord {
-  /** text of the message */
-  text: string
-  /** creation time of the comment */
-  timestamp: number
+  /** winner of the message */
+  winner: string
 }
 
 function assertRecord(value: unknown): asserts value is SampleDappRecord {
@@ -30,10 +28,10 @@ const informationSignal = new InformationSignal(beeUrl, {
 })
 const { resourceId } = informationSignal.mine(targetBeeOverlayAddress, 16)
 
-// subscribe to incoming topics on the receiver node
-// this will immediately invoge `onMessage` and `onError` function if the message arrives to the target neighborhood of the Kademlia network.
-const cancelSub = informationSignal.subscribe(
+// write GSOC record that satisfies the message format with the `write` method.
+const fn = async () => {
+  const uploadedSoc = await informationSignal.write({ winner: 'Hello there' }, resourceId)
   // eslint-disable-next-line no-console
-  { onMessage: msg => console.log('hack', msg), onError: console.log },
-  resourceId,
-)
+  console.log('all good', uploadedSoc)
+}
+fn()
