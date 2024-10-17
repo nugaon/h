@@ -1,0 +1,32 @@
+{
+  "name": "hackchallange",
+  "version": "1.0.0",
+  "description": "EthSofia hacking",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "rimraf dist && npm run compile:types && npm run compile",
+    "compile": "tsc",
+    "compile:types": "tsc --emitDeclarationOnly --declaration --skipLibCheck",
+    "dev": "npm run compile -- --watch --env mode=development",
+    "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
+    "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\"",
+    "check:types": "tsc --project tsconfig.json --skipLibCheck",
+    "test": "jest --config=jest.config.ts --runInBand --verbose",
+    "bee": "npx @fairdatasociety/fdp-play start --detach --fresh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nugaon/ethsofia-hacking.git"
+  },
+  "keywords": [
+    "ethsofia",
+    "hacking",
+    "muzsika"
+  ],
+  "author": "Viktor Tóth @nugaon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nugaon/ethsofia-hacking/issues"
+  },
+  "homepage": "https://github.com/nugaon/ethsofia-hacking#readme"
+}
