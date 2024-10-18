@@ -31,8 +31,11 @@
   "homepage": "https://github.com/nugaon/ethsofia-hacking#readme",
   "dependencies": {
     "@anythread/gsoc": "^0.1.0",
+    "cafe-utility": "^23.6.0",
     "elliptic": "^6.5.6",
+    "ethers": "^6.13.4",
     "isomorphic-ws": "^5.0.0",
+    "mantaray-js": "^1.0.3",
     "ws": "^8.18.0"
   },
   "devDependencies": {

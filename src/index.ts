@@ -1,39 +1,26 @@
-import { InformationSignal } from '@anythread/gsoc'
+import { Bee } from '@ethersphere/bee-js'
+import { createFeed } from './feed'
+import { BEE_API, STAMP } from './globals'
+import { createGsocListener } from './listener'
+import { createMantarayWithMetadata } from './mantaray'
 
-const beeUrl = 'http://159.89.31.18:1633/'
-const postageBatchId = '0000000000000000000000000000000000000000000000000000000000000000' // for write operations, the Postage Batch ID must be set.
-const id = 'SampleDapp:v1'
-// it is also possible to mine the resourceId to the desired Bee node to ensure they will get the message as soon as possible on the forwarding Kademlia network
-const targetBeeOverlayAddress = 'b0baf37700000000000000000000000000000000000000000000000000000000'
+main()
 
-interface SampleDappRecord {
-  /** text of the message */
-  text: string
-  /** creation time of the comment */
-  timestamp: number
-}
+async function main() {
+  const bee = new Bee(BEE_API)
 
-function assertRecord(value: unknown): asserts value is SampleDappRecord {
-  if (value !== null && typeof value === 'object' && Object.keys(value).includes('winner')) {
-    return
+  // create feed
+  if (1) {
+    console.log(await createFeed(bee, STAMP, 'hello1', 'hello2'))
   }
-  throw new Error('The given value is not a valid personal storage record')
+
+  // create mantaray
+  if (0) {
+    console.log(await createMantarayWithMetadata(bee, STAMP, 'secretkey', 'secretvalue'))
+  }
+
+  // create listener
+  if (0) {
+    createGsocListener()
+  }
 }
-
-// initialize object that will read and write the GSOC according to the passed consensus/configuration
-const informationSignal = new InformationSignal(beeUrl, {
-  postageBatchId,
-  consensus: {
-    id,
-    assertRecord,
-  },
-})
-const { resourceId } = informationSignal.mine(targetBeeOverlayAddress, 16)
-
-// subscribe to incoming topics on the receiver node
-// this will immediately invoge `onMessage` and `onError` function if the message arrives to the target neighborhood of the Kademlia network.
-const cancelSub = informationSignal.subscribe(
-  // eslint-disable-next-line no-console
-  { onMessage: msg => console.log('hack', msg), onError: console.log },
-  resourceId,
-)
