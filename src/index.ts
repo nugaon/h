@@ -26,7 +26,7 @@ const informationSignal = new InformationSignal(BEE_API, {
 const { resourceId } = informationSignal.mine(TARGET_OVERLAY, 16)
 
 // subscribe to incoming topics on the receiver node
-// this will immediately invoge `onMessage` and `onError` function if the message arrives to the target neighborhood of the Kademlia network.
+// this will immediately invoke `onMessage` and `onError` function if the message arrives to the target neighborhood of the Kademlia network.
 const cancelSub = informationSignal.subscribe(
   // eslint-disable-next-line no-console
   { onMessage: msg => console.log('hack', msg), onError: console.log },
