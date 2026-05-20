@@ -1,10 +1,5 @@
 import { InformationSignal } from '@anythread/gsoc'
-
-const beeUrl = 'http://159.89.31.18:1633/'
-const postageBatchId = '0000000000000000000000000000000000000000000000000000000000000000' // for write operations, the Postage Batch ID must be set.
-const id = 'SampleDapp:v1'
-// it is also possible to mine the resourceId to the desired Bee node to ensure they will get the message as soon as possible on the forwarding Kademlia network
-const targetBeeOverlayAddress = 'b0baf37700000000000000000000000000000000000000000000000000000000'
+import { BEE_API, GSOC_ID, STAMP, TARGET_OVERLAY } from './globals'
 
 interface SampleDappRecord {
   /** winner of the message */
@@ -19,14 +14,14 @@ function assertRecord(value: unknown): asserts value is SampleDappRecord {
 }
 
 // initialize object that will read and write the GSOC according to the passed consensus/configuration
-const informationSignal = new InformationSignal(beeUrl, {
-  postageBatchId,
+const informationSignal = new InformationSignal(BEE_API, {
+  postageBatchId: STAMP,
   consensus: {
-    id,
+    id: GSOC_ID,
     assertRecord,
   },
 })
-const { resourceId } = informationSignal.mine(targetBeeOverlayAddress, 16)
+const { resourceId } = informationSignal.mine(TARGET_OVERLAY, 16)
 
 // write GSOC record that satisfies the message format with the `write` method.
 const fn = async () => {
